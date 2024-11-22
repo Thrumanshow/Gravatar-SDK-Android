@@ -33,6 +33,12 @@ internal data class AvatarPickerUiState(
         )
     }
 
+    val showNonSelectedAvatarAlert: Boolean = if (emailAvatars != null) {
+        emailAvatars.selectedAvatarId == null
+    } else {
+        false
+    }
+
     private fun EmailAvatars.mapToUiModel(): List<AvatarUi> {
         return mutableListOf<AvatarUi>().apply {
             uploadingAvatar?.let {
