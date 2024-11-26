@@ -23,6 +23,7 @@ internal data class AvatarPickerUiState(
     val failedUploadDialog: AvatarUploadFailure? = null,
     val avatarUpdates: Int = 0,
     val downloadManagerDisabled: Boolean = false,
+    val nonSelectedAvatarAlertVisible: Boolean = false,
 ) {
     val avatarsSectionUiState: AvatarsSectionUiState? = emailAvatars?.mapToUiModel()?.let {
         AvatarsSectionUiState(
@@ -31,12 +32,6 @@ internal data class AvatarPickerUiState(
             uploadButtonEnabled = uploadingAvatar == null,
             avatarPickerContentLayout = avatarPickerContentLayout,
         )
-    }
-
-    val showNonSelectedAvatarAlert: Boolean = if (emailAvatars != null) {
-        emailAvatars.selectedAvatarId == null
-    } else {
-        false
     }
 
     private fun EmailAvatars.mapToUiModel(): List<AvatarUi> {

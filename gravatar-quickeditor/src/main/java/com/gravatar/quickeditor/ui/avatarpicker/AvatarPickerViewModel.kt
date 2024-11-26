@@ -11,6 +11,7 @@ import com.gravatar.quickeditor.data.FileUtils
 import com.gravatar.quickeditor.data.ImageDownloader
 import com.gravatar.quickeditor.data.models.QuickEditorError
 import com.gravatar.quickeditor.data.repository.AvatarRepository
+import com.gravatar.quickeditor.data.repository.EmailAvatars
 import com.gravatar.quickeditor.ui.editor.AvatarPickerContentLayout
 import com.gravatar.quickeditor.ui.editor.GravatarQuickEditorParams
 import com.gravatar.restapi.models.Avatar
@@ -70,6 +71,7 @@ internal class AvatarPickerViewModel(
             is AvatarPickerEvent.DownloadAvatarTapped -> downloadAvatar(event.avatar)
             AvatarPickerEvent.DownloadManagerDisabledDialogDismissed -> hideDownloadManagerAlert()
             is AvatarPickerEvent.AvatarDeleteSelected -> deleteAvatar(event.avatarId)
+            AvatarPickerEvent.AvatarDeleteAlertDismissed -> hideNonSelectedAvatarAlert()
         }
     }
 
@@ -144,10 +146,12 @@ internal class AvatarPickerViewModel(
                         // Hopefully, we can remove this delay soon
                         delay(AVATAR_SWITCH_DELAY)
                         _uiState.update { currentState ->
+                            val emailAvatars = currentState.emailAvatars?.copy(selectedAvatarId = avatarId)
                             currentState.copy(
-                                emailAvatars = currentState.emailAvatars?.copy(selectedAvatarId = avatarId),
+                                emailAvatars = emailAvatars,
                                 selectingAvatarId = null,
                                 avatarUpdates = currentState.avatarUpdates.inc(),
+                                nonSelectedAvatarAlertVisible = shouldShowNonSelectedAvatarAlert(emailAvatars),
                             )
                         }
                         _actions.send(AvatarPickerAction.AvatarSelected)
@@ -188,27 +192,29 @@ internal class AvatarPickerViewModel(
                         _actions.send(AvatarPickerAction.AvatarSelected)
                     }
                     _uiState.update { currentState ->
+                        val emailAvatars = currentState.emailAvatars?.copy(
+                            avatars = buildList {
+                                add(avatar)
+                                addAll(
+                                    currentState.emailAvatars.avatars.filter { it.imageId != avatar.imageId },
+                                )
+                            },
+                            selectedAvatarId = if (avatar.selected == true) {
+                                avatar.imageId
+                            } else {
+                                currentState.emailAvatars.selectedAvatarId
+                            },
+                        )
                         currentState.copy(
                             uploadingAvatar = null,
-                            emailAvatars = currentState.emailAvatars?.copy(
-                                avatars = buildList {
-                                    add(avatar)
-                                    addAll(
-                                        currentState.emailAvatars.avatars.filter { it.imageId != avatar.imageId },
-                                    )
-                                },
-                                selectedAvatarId = if (avatar.selected == true) {
-                                    avatar.imageId
-                                } else {
-                                    currentState.emailAvatars.selectedAvatarId
-                                },
-                            ),
+                            emailAvatars = emailAvatars,
                             scrollToIndex = null,
                             avatarUpdates = if (avatar.selected == true) {
                                 currentState.avatarUpdates.inc()
                             } else {
                                 currentState.avatarUpdates
                             },
+                            nonSelectedAvatarAlertVisible = shouldShowNonSelectedAvatarAlert(emailAvatars),
                         )
                     }
                 }
@@ -276,6 +282,7 @@ internal class AvatarPickerViewModel(
                         },
                         isLoading = false,
                         error = null,
+                        nonSelectedAvatarAlertVisible = shouldShowNonSelectedAvatarAlert(emailAvatars),
                     )
                 }
             }
@@ -295,20 +302,22 @@ internal class AvatarPickerViewModel(
             val avatar = avatarIndex?.let { _uiState.value.emailAvatars?.avatars?.get(avatarIndex) }
             if (avatar != null) {
                 _uiState.update { currentState ->
+                    val emailAvatars = currentState.emailAvatars?.copy(
+                        avatars = currentState.emailAvatars.avatars.filter { it.imageId != avatarId },
+                        selectedAvatarId = if (currentState.emailAvatars.selectedAvatarId == avatarId) {
+                            null
+                        } else {
+                            currentState.emailAvatars.selectedAvatarId
+                        },
+                    )
                     currentState.copy(
-                        emailAvatars = currentState.emailAvatars?.copy(
-                            avatars = currentState.emailAvatars.avatars.filter { it.imageId != avatarId },
-                            selectedAvatarId = if (currentState.emailAvatars.selectedAvatarId == avatarId) {
-                                null
-                            } else {
-                                currentState.emailAvatars.selectedAvatarId
-                            },
-                        ),
+                        emailAvatars = emailAvatars,
                         avatarUpdates = if (isSelectedAvatar) {
                             currentState.avatarUpdates.inc()
                         } else {
                             currentState.avatarUpdates
                         },
+                        nonSelectedAvatarAlertVisible = shouldShowNonSelectedAvatarAlert(emailAvatars),
                     )
                 }
                 when (avatarRepository.deleteAvatar(email, avatarId)) {
@@ -319,28 +328,44 @@ internal class AvatarPickerViewModel(
                     is GravatarResult.Failure -> {
                         _actions.send(AvatarPickerAction.AvatarDeletionFailed(avatarId))
                         _uiState.update { currentState ->
+                            val emailAvatars = currentState.emailAvatars?.copy(
+                                avatars = currentState.emailAvatars.avatars.toMutableList().apply {
+                                    add(avatarIndex, avatar)
+                                },
+                                selectedAvatarId = if (isSelectedAvatar) {
+                                    avatarId
+                                } else {
+                                    currentState.emailAvatars.selectedAvatarId
+                                },
+                            )
                             currentState.copy(
-                                emailAvatars = currentState.emailAvatars?.copy(
-                                    avatars = currentState.emailAvatars.avatars.toMutableList().apply {
-                                        add(avatarIndex, avatar)
-                                    },
-                                    selectedAvatarId = if (isSelectedAvatar) {
-                                        avatarId
-                                    } else {
-                                        currentState.emailAvatars.selectedAvatarId
-                                    },
-                                ),
+                                emailAvatars = emailAvatars,
                                 avatarUpdates = if (isSelectedAvatar) {
                                     currentState.avatarUpdates.inc()
                                 } else {
                                     currentState.avatarUpdates
                                 },
+                                nonSelectedAvatarAlertVisible = shouldShowNonSelectedAvatarAlert(emailAvatars),
                             )
                         }
                     }
                 }
             }
         }
+    }
+
+    private fun hideNonSelectedAvatarAlert() {
+        _uiState.update { currentState ->
+            currentState.copy(
+                nonSelectedAvatarAlertVisible = false,
+            )
+        }
+    }
+
+    private fun shouldShowNonSelectedAvatarAlert(emailAvatars: EmailAvatars?): Boolean = if (emailAvatars != null) {
+        emailAvatars.selectedAvatarId == null
+    } else {
+        false
     }
 
     private val QuickEditorError.asSectionError: SectionError

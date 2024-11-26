@@ -149,11 +149,6 @@ internal fun AvatarPicker(uiState: AvatarPickerUiState, onEvent: (AvatarPickerEv
     var loadingSectionHeight by remember { mutableStateOf(DEFAULT_PAGE_HEIGHT) }
     var storagePermissionRationaleDialogVisible by rememberSaveable { mutableStateOf(false) }
     var avatarToDownload: Avatar? by remember { mutableStateOf(null) }
-    var nonSelectedAvatarAlertVisible by rememberSaveable { mutableStateOf(uiState.showNonSelectedAvatarAlert) }
-
-    LaunchedEffect(uiState.showNonSelectedAvatarAlert) {
-        nonSelectedAvatarAlertVisible = uiState.showNonSelectedAvatarAlert
-    }
 
     val writeExternalStoragePermissionLauncher = rememberLauncherForActivityResult(
         ActivityResultContracts.RequestPermission(),
@@ -204,10 +199,10 @@ internal fun AvatarPicker(uiState: AvatarPickerUiState, onEvent: (AvatarPickerEv
                     .fillMaxWidth()
                     .padding(bottom = 10.dp),
             )
-            AnimatedVisibility(nonSelectedAvatarAlertVisible) {
+            AnimatedVisibility(uiState.nonSelectedAvatarAlertVisible) {
                 AlertBanner(
                     message = stringResource(id = R.string.gravatar_qe_alert_banner_no_avatar_selected),
-                    onClose = { nonSelectedAvatarAlertVisible = false },
+                    onClose = { onEvent(AvatarPickerEvent.AvatarDeleteAlertDismissed) },
                     modifier = Modifier.padding(start = 16.dp, end = 16.dp, bottom = 24.dp),
                 )
             }

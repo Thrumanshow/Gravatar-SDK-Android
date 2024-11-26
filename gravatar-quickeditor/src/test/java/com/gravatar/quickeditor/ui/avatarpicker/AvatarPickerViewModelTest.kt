@@ -137,6 +137,7 @@ class AvatarPickerViewModelTest {
                     emailAvatars = emailAvatars,
                     error = null,
                     profile = ComponentState.Loading,
+                    nonSelectedAvatarAlertVisible = true,
                 ),
                 awaitItem(),
             )
@@ -146,6 +147,7 @@ class AvatarPickerViewModelTest {
                     emailAvatars = emailAvatars,
                     error = null,
                     profile = ComponentState.Loaded(profile),
+                    nonSelectedAvatarAlertVisible = true,
                 ),
                 awaitItem(),
             )
@@ -167,6 +169,7 @@ class AvatarPickerViewModelTest {
                     emailAvatars = emailAvatars,
                     error = null,
                     profile = ComponentState.Loading,
+                    nonSelectedAvatarAlertVisible = true,
                 ),
                 awaitItem(),
             )
@@ -176,6 +179,7 @@ class AvatarPickerViewModelTest {
                     emailAvatars = emailAvatars,
                     error = null,
                     profile = null,
+                    nonSelectedAvatarAlertVisible = true,
                 ),
                 awaitItem(),
             )
@@ -702,7 +706,7 @@ class AvatarPickerViewModelTest {
     @Suppress("LongMethod")
     @OptIn(ExperimentalCoroutinesApi::class)
     @Test
-    fun `given avatar upload when no avatar selected then avatars are fetched - uiState is updated`() = runTest {
+    fun `given no avatar selected when avatar upload success then avatar is selected - uiState is updated`() = runTest {
         val uriOne = mockk<Uri>()
         val emailAvatarsCopy = emailAvatars.copy(
             avatars = listOf(createAvatar("3", isSelected = false)),
@@ -738,12 +742,13 @@ class AvatarPickerViewModelTest {
                 scrollToIndex = 0,
                 avatarPickerContentLayout = avatarPickerContentLayout,
                 avatarUpdates = 0,
+                nonSelectedAvatarAlertVisible = true,
             )
             assertEquals(
                 avatarPickerUiState,
                 awaitItem(),
             )
-            // State produced before finishing uploadAvatar, just after fetchAvatars has finished
+            // State produced before finishing uploadAvatar
             avatarPickerUiState = AvatarPickerUiState(
                 email = email,
                 emailAvatars = emailAvatarsUpdated,
@@ -754,6 +759,7 @@ class AvatarPickerViewModelTest {
                 scrollToIndex = null,
                 avatarPickerContentLayout = avatarPickerContentLayout,
                 avatarUpdates = 1,
+                nonSelectedAvatarAlertVisible = false,
             )
             assertEquals(
                 avatarPickerUiState,
@@ -789,6 +795,7 @@ class AvatarPickerViewModelTest {
                 avatarPickerContentLayout = avatarPickerContentLayout,
                 avatarUpdates = 1,
                 scrollToIndex = 0,
+                nonSelectedAvatarAlertVisible = true,
             )
             assertEquals(
                 avatarPickerUiState,
@@ -824,6 +831,7 @@ class AvatarPickerViewModelTest {
                 avatarPickerContentLayout = avatarPickerContentLayout,
                 avatarUpdates = 0,
                 scrollToIndex = 0,
+                nonSelectedAvatarAlertVisible = false,
             )
             assertEquals(
                 avatarPickerUiState,
@@ -859,6 +867,7 @@ class AvatarPickerViewModelTest {
                 avatarPickerContentLayout = avatarPickerContentLayout,
                 avatarUpdates = 2,
                 scrollToIndex = 0,
+                nonSelectedAvatarAlertVisible = false,
             )
             assertEquals(
                 avatarPickerUiState,
@@ -897,6 +906,7 @@ class AvatarPickerViewModelTest {
                 avatarPickerContentLayout = avatarPickerContentLayout,
                 avatarUpdates = 0,
                 scrollToIndex = 0,
+                nonSelectedAvatarAlertVisible = false,
             )
             assertEquals(
                 avatarPickerUiState,
