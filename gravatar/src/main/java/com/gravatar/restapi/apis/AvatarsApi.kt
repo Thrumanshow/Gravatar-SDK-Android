@@ -27,16 +27,17 @@ internal interface AvatarsApi {
      * Delete avatar
      * Deletes a specific avatar for the authenticated user.
      * Responses:
-     *  - 204: Avatar deleted successfully
+     *  - 200: Avatar deleted successfully
      *  - 401: Not Authorized
      *  - 403: Insufficient Scope
+     *  - 404: Avatar not found
      *
-     * @param imageId The ID of the avatar to delete.
+     * @param imageHash The hash of the avatar to delete.
      * @return [Unit]
      */
-    @DELETE("me/avatars/{imageId}")
+    @DELETE("me/avatars/{imageHash}")
     suspend fun deleteAvatar(
-        @Path("imageId") imageId: kotlin.String,
+        @Path("imageHash") imageHash: kotlin.String,
     ): Response<Unit>
 
     /**
@@ -59,7 +60,7 @@ internal interface AvatarsApi {
      * Set avatar for the hashed email
      * Sets the avatar for the provided email hash.
      * Responses:
-     *  - 204: Avatar successfully set
+     *  - 200: Avatar successfully set
      *  - 401: Not Authorized
      *  - 403: Insufficient Scope
      *
@@ -80,14 +81,15 @@ internal interface AvatarsApi {
      *  - 200: Avatar updated successfully
      *  - 401: Not Authorized
      *  - 403: Insufficient Scope
+     *  - 404: Avatar not found
      *
-     * @param imageId The ID of the avatar to update.
+     * @param imageHash The hash of the avatar to update.
      * @param updateAvatarRequest
      * @return [Avatar]
      */
-    @PATCH("me/avatars/{imageId}")
+    @PATCH("me/avatars/{imageHash}")
     suspend fun updateAvatar(
-        @Path("imageId") imageId: kotlin.String,
+        @Path("imageHash") imageHash: kotlin.String,
         @Body updateAvatarRequest: UpdateAvatarRequest,
     ): Response<Avatar>
 
