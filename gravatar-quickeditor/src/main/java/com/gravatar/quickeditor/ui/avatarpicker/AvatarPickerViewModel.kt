@@ -151,7 +151,11 @@ internal class AvatarPickerViewModel(
                                 emailAvatars = emailAvatars,
                                 selectingAvatarId = null,
                                 avatarUpdates = currentState.avatarUpdates.inc(),
-                                nonSelectedAvatarAlertVisible = shouldShowNonSelectedAvatarAlert(emailAvatars),
+                                nonSelectedAvatarAlertVisible = shouldShowNonSelectedAvatarAlert(
+                                    emailAvatars = emailAvatars,
+                                    alertStatus = currentState.nonSelectedAvatarAlertVisible,
+                                    forceVisibility = true,
+                                ),
                             )
                         }
                         _actions.send(AvatarPickerAction.AvatarSelected)
@@ -174,6 +178,7 @@ internal class AvatarPickerViewModel(
         }
     }
 
+    @Suppress("LongMethod")
     private fun uploadAvatar(uri: Uri) {
         viewModelScope.launch {
             _uiState.update { currentState ->
@@ -214,7 +219,11 @@ internal class AvatarPickerViewModel(
                             } else {
                                 currentState.avatarUpdates
                             },
-                            nonSelectedAvatarAlertVisible = shouldShowNonSelectedAvatarAlert(emailAvatars),
+                            nonSelectedAvatarAlertVisible = shouldShowNonSelectedAvatarAlert(
+                                emailAvatars = emailAvatars,
+                                alertStatus = currentState.nonSelectedAvatarAlertVisible,
+                                forceVisibility = avatar.selected == true,
+                            ),
                         )
                     }
                 }
@@ -282,7 +291,10 @@ internal class AvatarPickerViewModel(
                         },
                         isLoading = false,
                         error = null,
-                        nonSelectedAvatarAlertVisible = shouldShowNonSelectedAvatarAlert(emailAvatars),
+                        nonSelectedAvatarAlertVisible = shouldShowNonSelectedAvatarAlert(
+                            emailAvatars = emailAvatars,
+                            alertStatus = currentState.nonSelectedAvatarAlertVisible,
+                        ),
                     )
                 }
             }
@@ -295,6 +307,7 @@ internal class AvatarPickerViewModel(
         }
     }
 
+    @Suppress("LongMethod")
     private fun deleteAvatar(avatarId: String) {
         viewModelScope.launch {
             val avatarIndex = _uiState.value.emailAvatars?.avatars?.indexOfFirstOrNull { it.imageId == avatarId }
@@ -317,7 +330,11 @@ internal class AvatarPickerViewModel(
                         } else {
                             currentState.avatarUpdates
                         },
-                        nonSelectedAvatarAlertVisible = shouldShowNonSelectedAvatarAlert(emailAvatars),
+                        nonSelectedAvatarAlertVisible = shouldShowNonSelectedAvatarAlert(
+                            emailAvatars = emailAvatars,
+                            alertStatus = currentState.nonSelectedAvatarAlertVisible,
+                            forceVisibility = false,
+                        ),
                     )
                 }
                 when (avatarRepository.deleteAvatar(email, avatarId)) {
@@ -345,7 +362,11 @@ internal class AvatarPickerViewModel(
                                 } else {
                                     currentState.avatarUpdates
                                 },
-                                nonSelectedAvatarAlertVisible = shouldShowNonSelectedAvatarAlert(emailAvatars),
+                                nonSelectedAvatarAlertVisible = shouldShowNonSelectedAvatarAlert(
+                                    emailAvatars = emailAvatars,
+                                    alertStatus = currentState.nonSelectedAvatarAlertVisible,
+                                    forceVisibility = false,
+                                ),
                             )
                         }
                     }
@@ -357,15 +378,19 @@ internal class AvatarPickerViewModel(
     private fun hideNonSelectedAvatarAlert() {
         _uiState.update { currentState ->
             currentState.copy(
-                nonSelectedAvatarAlertVisible = false,
+                nonSelectedAvatarAlertVisible = DeleteAvatarAlertStatus.DISMISSED,
             )
         }
     }
 
-    private fun shouldShowNonSelectedAvatarAlert(emailAvatars: EmailAvatars?): Boolean = if (emailAvatars != null) {
-        emailAvatars.selectedAvatarId == null
-    } else {
-        false
+    private fun shouldShowNonSelectedAvatarAlert(
+        emailAvatars: EmailAvatars?,
+        alertStatus: DeleteAvatarAlertStatus,
+        forceVisibility: Boolean = false,
+    ): DeleteAvatarAlertStatus = when {
+        alertStatus == DeleteAvatarAlertStatus.DISMISSED && !forceVisibility -> DeleteAvatarAlertStatus.DISMISSED
+        emailAvatars != null && emailAvatars.selectedAvatarId == null -> DeleteAvatarAlertStatus.VISIBLE
+        else -> DeleteAvatarAlertStatus.HIDDEN
     }
 
     private val QuickEditorError.asSectionError: SectionError

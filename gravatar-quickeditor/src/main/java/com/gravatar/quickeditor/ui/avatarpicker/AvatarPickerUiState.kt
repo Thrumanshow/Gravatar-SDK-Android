@@ -23,7 +23,7 @@ internal data class AvatarPickerUiState(
     val failedUploadDialog: AvatarUploadFailure? = null,
     val avatarUpdates: Int = 0,
     val downloadManagerDisabled: Boolean = false,
-    val nonSelectedAvatarAlertVisible: Boolean = false,
+    val nonSelectedAvatarAlertVisible: DeleteAvatarAlertStatus = DeleteAvatarAlertStatus.HIDDEN,
 ) {
     val avatarsSectionUiState: AvatarsSectionUiState? = emailAvatars?.mapToUiModel()?.let {
         AvatarsSectionUiState(
@@ -98,4 +98,10 @@ internal sealed class AvatarUi(val avatarId: String) {
         val uri: Uri,
         val isLoading: Boolean,
     ) : AvatarUi(uri.toString())
+}
+
+internal enum class DeleteAvatarAlertStatus {
+    HIDDEN,
+    VISIBLE,
+    DISMISSED,
 }
