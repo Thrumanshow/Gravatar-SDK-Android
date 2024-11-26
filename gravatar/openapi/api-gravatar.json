@@ -971,7 +971,7 @@
         }
       }
     },
-    "/me/avatars/{imageId}": {
+    "/me/avatars/{imageHash}": {
       "delete": {
         "summary": "Delete avatar",
         "description": "Deletes a specific avatar for the authenticated user.",
@@ -986,17 +986,17 @@
         ],
         "parameters": [
           {
-            "name": "imageId",
+            "name": "imageHash",
             "in": "path",
             "required": true,
-            "description": "The ID of the avatar to delete.",
+            "description": "The hash of the avatar to delete.",
             "schema": {
               "type": "string"
             }
           }
         ],
         "responses": {
-          "204": {
+          "200": {
             "description": "Avatar deleted successfully"
           },
           "401": {
@@ -1006,6 +1006,9 @@
           "403": {
             "description": "Insufficient Scope",
             "$ref": "#/components/responses/insufficient_scope"
+          },
+          "404": {
+            "description": "Avatar not found"
           }
         }
       },
@@ -1048,10 +1051,10 @@
         },
         "parameters": [
           {
-            "name": "imageId",
+            "name": "imageHash",
             "in": "path",
             "required": true,
-            "description": "The ID of the avatar to update.",
+            "description": "The hash of the avatar to update.",
             "schema": {
               "type": "string"
             }
@@ -1075,6 +1078,9 @@
           "403": {
             "description": "Insufficient Scope",
             "$ref": "#/components/responses/insufficient_scope"
+          },
+          "404": {
+            "description": "Avatar not found"
           }
         }
       }
@@ -1127,7 +1133,7 @@
           }
         ],
         "responses": {
-          "204": {
+          "200": {
             "description": "Avatar successfully set"
           },
           "401": {
