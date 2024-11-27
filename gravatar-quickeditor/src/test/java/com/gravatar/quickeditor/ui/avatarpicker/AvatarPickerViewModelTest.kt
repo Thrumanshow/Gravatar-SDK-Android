@@ -137,7 +137,7 @@ class AvatarPickerViewModelTest {
                     emailAvatars = emailAvatars,
                     error = null,
                     profile = ComponentState.Loading,
-                    nonSelectedAvatarAlertVisible = DeleteAvatarAlertStatus.VISIBLE,
+                    nonSelectedAvatarAlertVisible = false,
                 ),
                 awaitItem(),
             )
@@ -147,7 +147,18 @@ class AvatarPickerViewModelTest {
                     emailAvatars = emailAvatars,
                     error = null,
                     profile = ComponentState.Loaded(profile),
-                    nonSelectedAvatarAlertVisible = DeleteAvatarAlertStatus.VISIBLE,
+                    nonSelectedAvatarAlertVisible = false,
+                ),
+                awaitItem(),
+            )
+            // Checking that the nonSelectedAvatarAlertVisible is set to true after emails are loaded
+            assertEquals(
+                avatarPickerUiState.copy(
+                    email = email,
+                    emailAvatars = emailAvatars,
+                    error = null,
+                    profile = ComponentState.Loaded(profile),
+                    nonSelectedAvatarAlertVisible = true,
                 ),
                 awaitItem(),
             )
@@ -169,7 +180,7 @@ class AvatarPickerViewModelTest {
                     emailAvatars = emailAvatars,
                     error = null,
                     profile = ComponentState.Loading,
-                    nonSelectedAvatarAlertVisible = DeleteAvatarAlertStatus.VISIBLE,
+                    nonSelectedAvatarAlertVisible = false,
                 ),
                 awaitItem(),
             )
@@ -179,10 +190,11 @@ class AvatarPickerViewModelTest {
                     emailAvatars = emailAvatars,
                     error = null,
                     profile = null,
-                    nonSelectedAvatarAlertVisible = DeleteAvatarAlertStatus.VISIBLE,
+                    nonSelectedAvatarAlertVisible = false,
                 ),
                 awaitItem(),
             )
+            skipItems(1) // skipping the nonAvatarSelectedAlertVisible state
         }
     }
 
@@ -742,7 +754,7 @@ class AvatarPickerViewModelTest {
                 scrollToIndex = 0,
                 avatarPickerContentLayout = avatarPickerContentLayout,
                 avatarUpdates = 0,
-                nonSelectedAvatarAlertVisible = DeleteAvatarAlertStatus.VISIBLE,
+                nonSelectedAvatarAlertVisible = true,
             )
             assertEquals(
                 avatarPickerUiState,
@@ -759,7 +771,24 @@ class AvatarPickerViewModelTest {
                 scrollToIndex = null,
                 avatarPickerContentLayout = avatarPickerContentLayout,
                 avatarUpdates = 1,
-                nonSelectedAvatarAlertVisible = DeleteAvatarAlertStatus.HIDDEN,
+                nonSelectedAvatarAlertVisible = true,
+            )
+            assertEquals(
+                avatarPickerUiState,
+                awaitItem(),
+            )
+            // State produced (in reaction of the emailAvatars change) to update the avatar non selected alert
+            avatarPickerUiState = AvatarPickerUiState(
+                email = email,
+                emailAvatars = emailAvatarsUpdated,
+                error = null,
+                profile = ComponentState.Loaded(profile),
+                selectingAvatarId = null,
+                uploadingAvatar = null,
+                scrollToIndex = null,
+                avatarPickerContentLayout = avatarPickerContentLayout,
+                avatarUpdates = 1,
+                nonSelectedAvatarAlertVisible = false,
             )
             assertEquals(
                 avatarPickerUiState,
@@ -787,7 +816,7 @@ class AvatarPickerViewModelTest {
             expectMostRecentItem()
             val avatarToDelete = avatars.first()
             viewModel.onEvent(AvatarPickerEvent.AvatarDeleteSelected(avatarToDelete.imageId))
-            val avatarPickerUiState = AvatarPickerUiState(
+            var avatarPickerUiState = AvatarPickerUiState(
                 email = email,
                 emailAvatars = emailAvatarsCopy.copy(avatars = avatars.minus(avatarToDelete), selectedAvatarId = null),
                 error = null,
@@ -795,7 +824,15 @@ class AvatarPickerViewModelTest {
                 avatarPickerContentLayout = avatarPickerContentLayout,
                 avatarUpdates = 1,
                 scrollToIndex = 0,
-                nonSelectedAvatarAlertVisible = DeleteAvatarAlertStatus.VISIBLE,
+                nonSelectedAvatarAlertVisible = false,
+            )
+            assertEquals(
+                avatarPickerUiState,
+                awaitItem(),
+            )
+
+            avatarPickerUiState = avatarPickerUiState.copy(
+                nonSelectedAvatarAlertVisible = true,
             )
             assertEquals(
                 avatarPickerUiState,
@@ -831,7 +868,7 @@ class AvatarPickerViewModelTest {
                 avatarPickerContentLayout = avatarPickerContentLayout,
                 avatarUpdates = 0,
                 scrollToIndex = 0,
-                nonSelectedAvatarAlertVisible = DeleteAvatarAlertStatus.HIDDEN,
+                nonSelectedAvatarAlertVisible = false,
             )
             assertEquals(
                 avatarPickerUiState,
@@ -867,7 +904,7 @@ class AvatarPickerViewModelTest {
                 avatarPickerContentLayout = avatarPickerContentLayout,
                 avatarUpdates = 2,
                 scrollToIndex = 0,
-                nonSelectedAvatarAlertVisible = DeleteAvatarAlertStatus.HIDDEN,
+                nonSelectedAvatarAlertVisible = false,
             )
             assertEquals(
                 avatarPickerUiState,
@@ -906,7 +943,7 @@ class AvatarPickerViewModelTest {
                 avatarPickerContentLayout = avatarPickerContentLayout,
                 avatarUpdates = 0,
                 scrollToIndex = 0,
-                nonSelectedAvatarAlertVisible = DeleteAvatarAlertStatus.HIDDEN,
+                nonSelectedAvatarAlertVisible = false,
             )
             assertEquals(
                 avatarPickerUiState,
@@ -915,26 +952,6 @@ class AvatarPickerViewModelTest {
             viewModel.actions.test {
                 assertEquals(AvatarPickerAction.AvatarDeletionFailed(avatarToDelete.imageId), awaitItem())
             }
-        }
-    }
-
-    @OptIn(ExperimentalCoroutinesApi::class)
-    @Test
-    fun `given avatar when download queued then AvatarDownloadStarted sent`() = runTest {
-        val emailAvatarsCopy = emailAvatars.copy(avatars = avatars, selectedAvatarId = "1")
-        coEvery { avatarRepository.getAvatars(email) } returns GravatarResult.Success(emailAvatarsCopy)
-        coEvery { profileService.retrieveCatching(email) } returns GravatarResult.Success(profile)
-        coEvery { avatarRepository.selectAvatar(any(), any()) } returns GravatarResult.Success(Unit)
-        coEvery { imageDownloader.downloadImage(any()) } returns GravatarResult.Success(Unit)
-
-        viewModel = initViewModel()
-
-        advanceUntilIdle()
-
-        viewModel.onEvent(AvatarPickerEvent.DownloadAvatarTapped(avatars.first()))
-
-        viewModel.actions.test {
-            assertEquals(AvatarPickerAction.AvatarDownloadStarted, awaitItem())
         }
     }
 
@@ -968,7 +985,7 @@ class AvatarPickerViewModelTest {
                     uploadingAvatar = uri,
                     scrollToIndex = 0,
                     avatarPickerContentLayout = avatarPickerContentLayout,
-                    nonSelectedAvatarAlertVisible = DeleteAvatarAlertStatus.DISMISSED,
+                    nonSelectedAvatarAlertVisible = false,
                 )
                 assertEquals(
                     avatarPickerUiState,
@@ -986,7 +1003,7 @@ class AvatarPickerViewModelTest {
                         uploadingAvatar = null,
                         scrollToIndex = null,
                         avatarUpdates = 1,
-                        nonSelectedAvatarAlertVisible = DeleteAvatarAlertStatus.HIDDEN,
+                        nonSelectedAvatarAlertVisible = false,
                     ),
                     awaitItem(),
                 )
@@ -995,6 +1012,26 @@ class AvatarPickerViewModelTest {
                 assertEquals(AvatarPickerAction.AvatarSelected, awaitItem())
             }
         }
+
+    @OptIn(ExperimentalCoroutinesApi::class)
+    @Test
+    fun `given avatar when download queued then AvatarDownloadStarted sent`() = runTest {
+        val emailAvatarsCopy = emailAvatars.copy(avatars = avatars, selectedAvatarId = "1")
+        coEvery { avatarRepository.getAvatars(email) } returns GravatarResult.Success(emailAvatarsCopy)
+        coEvery { profileService.retrieveCatching(email) } returns GravatarResult.Success(profile)
+        coEvery { avatarRepository.selectAvatar(any(), any()) } returns GravatarResult.Success(Unit)
+        coEvery { imageDownloader.downloadImage(any()) } returns GravatarResult.Success(Unit)
+
+        viewModel = initViewModel()
+
+        advanceUntilIdle()
+
+        viewModel.onEvent(AvatarPickerEvent.DownloadAvatarTapped(avatars.first()))
+
+        viewModel.actions.test {
+            assertEquals(AvatarPickerAction.AvatarDownloadStarted, awaitItem())
+        }
+    }
 
     @OptIn(ExperimentalCoroutinesApi::class)
     @Test

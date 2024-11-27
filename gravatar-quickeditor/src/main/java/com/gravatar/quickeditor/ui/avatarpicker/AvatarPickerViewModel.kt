@@ -11,7 +11,6 @@ import com.gravatar.quickeditor.data.FileUtils
 import com.gravatar.quickeditor.data.ImageDownloader
 import com.gravatar.quickeditor.data.models.QuickEditorError
 import com.gravatar.quickeditor.data.repository.AvatarRepository
-import com.gravatar.quickeditor.data.repository.EmailAvatars
 import com.gravatar.quickeditor.ui.editor.AvatarPickerContentLayout
 import com.gravatar.quickeditor.ui.editor.GravatarQuickEditorParams
 import com.gravatar.restapi.models.Avatar
@@ -25,6 +24,11 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.filter
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -51,6 +55,7 @@ internal class AvatarPickerViewModel(
 
     init {
         refresh()
+        nonAvatarSelectedAlertObserver()
     }
 
     fun onEvent(event: AvatarPickerEvent) {
@@ -151,11 +156,6 @@ internal class AvatarPickerViewModel(
                                 emailAvatars = emailAvatars,
                                 selectingAvatarId = null,
                                 avatarUpdates = currentState.avatarUpdates.inc(),
-                                nonSelectedAvatarAlertVisible = shouldShowNonSelectedAvatarAlert(
-                                    emailAvatars = emailAvatars,
-                                    alertStatus = currentState.nonSelectedAvatarAlertVisible,
-                                    forceVisibility = true,
-                                ),
                             )
                         }
                         _actions.send(AvatarPickerAction.AvatarSelected)
@@ -219,11 +219,6 @@ internal class AvatarPickerViewModel(
                             } else {
                                 currentState.avatarUpdates
                             },
-                            nonSelectedAvatarAlertVisible = shouldShowNonSelectedAvatarAlert(
-                                emailAvatars = emailAvatars,
-                                alertStatus = currentState.nonSelectedAvatarAlertVisible,
-                                forceVisibility = avatar.selected == true,
-                            ),
                         )
                     }
                 }
@@ -291,10 +286,6 @@ internal class AvatarPickerViewModel(
                         },
                         isLoading = false,
                         error = null,
-                        nonSelectedAvatarAlertVisible = shouldShowNonSelectedAvatarAlert(
-                            emailAvatars = emailAvatars,
-                            alertStatus = currentState.nonSelectedAvatarAlertVisible,
-                        ),
                     )
                 }
             }
@@ -330,11 +321,6 @@ internal class AvatarPickerViewModel(
                         } else {
                             currentState.avatarUpdates
                         },
-                        nonSelectedAvatarAlertVisible = shouldShowNonSelectedAvatarAlert(
-                            emailAvatars = emailAvatars,
-                            alertStatus = currentState.nonSelectedAvatarAlertVisible,
-                            forceVisibility = false,
-                        ),
                     )
                 }
                 when (avatarRepository.deleteAvatar(email, avatarId)) {
@@ -362,11 +348,6 @@ internal class AvatarPickerViewModel(
                                 } else {
                                     currentState.avatarUpdates
                                 },
-                                nonSelectedAvatarAlertVisible = shouldShowNonSelectedAvatarAlert(
-                                    emailAvatars = emailAvatars,
-                                    alertStatus = currentState.nonSelectedAvatarAlertVisible,
-                                    forceVisibility = false,
-                                ),
                             )
                         }
                     }
@@ -378,19 +359,32 @@ internal class AvatarPickerViewModel(
     private fun hideNonSelectedAvatarAlert() {
         _uiState.update { currentState ->
             currentState.copy(
-                nonSelectedAvatarAlertVisible = DeleteAvatarAlertStatus.DISMISSED,
+                nonSelectedAvatarAlertVisible = false,
             )
         }
     }
 
-    private fun shouldShowNonSelectedAvatarAlert(
-        emailAvatars: EmailAvatars?,
-        alertStatus: DeleteAvatarAlertStatus,
-        forceVisibility: Boolean = false,
-    ): DeleteAvatarAlertStatus = when {
-        alertStatus == DeleteAvatarAlertStatus.DISMISSED && !forceVisibility -> DeleteAvatarAlertStatus.DISMISSED
-        emailAvatars != null && emailAvatars.selectedAvatarId == null -> DeleteAvatarAlertStatus.VISIBLE
-        else -> DeleteAvatarAlertStatus.HIDDEN
+    private fun nonAvatarSelectedAlertObserver() {
+        _uiState
+            .filter { it.emailAvatars != null }
+            .map { it.emailAvatars?.selectedAvatarId != null }
+            .distinctUntilChanged()
+            .onEach { isAvatarSelected ->
+                if (isAvatarSelected) {
+                    _uiState.update { currentState ->
+                        currentState.copy(
+                            nonSelectedAvatarAlertVisible = false,
+                        )
+                    }
+                } else {
+                    _uiState.update { currentState ->
+                        currentState.copy(
+                            nonSelectedAvatarAlertVisible = true,
+                        )
+                    }
+                }
+            }
+            .launchIn(viewModelScope)
     }
 
     private val QuickEditorError.asSectionError: SectionError

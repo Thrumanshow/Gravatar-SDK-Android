@@ -199,7 +199,7 @@ internal fun AvatarPicker(uiState: AvatarPickerUiState, onEvent: (AvatarPickerEv
                     .fillMaxWidth()
                     .padding(bottom = 10.dp),
             )
-            AnimatedVisibility(uiState.nonSelectedAvatarAlertVisible == DeleteAvatarAlertStatus.VISIBLE) {
+            AnimatedVisibility(uiState.nonSelectedAvatarAlertVisible) {
                 AlertBanner(
                     message = stringResource(id = R.string.gravatar_qe_alert_banner_no_avatar_selected),
                     onClose = { onEvent(AvatarPickerEvent.AvatarDeleteAlertDismissed) },
