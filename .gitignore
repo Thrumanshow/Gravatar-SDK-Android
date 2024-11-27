@@ -1,0 +1,26 @@
+.gradle
+
+# Intellij project files
+*.iml
+*.ipr
+*.iws
+.idea/
+
+# Fastlane
+fastlane/README.md
+fastlane/report.xml
+fastlane/.env
+
+# Gems
+/vendor
+
+.DS_Store
+/build
+/captures
+.externalNativeBuild
+.cxx
+local.properties
+.kotlin/
+build/
+
+secrets.properties
