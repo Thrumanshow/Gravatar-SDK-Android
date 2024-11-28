@@ -304,16 +304,19 @@ internal class AvatarPickerViewModel(
                                 currentState.emailAvatars.selectedAvatarId
                             },
                         ),
-                        avatarUpdates = if (isSelectedAvatar) {
-                            currentState.avatarUpdates.inc()
-                        } else {
-                            currentState.avatarUpdates
-                        },
                     )
                 }
                 when (avatarRepository.deleteAvatar(email, avatarId)) {
                     is GravatarResult.Success -> {
-                        // As we've already updated the UI, we don't need to do anything here
+                        _uiState.update { currentState ->
+                            currentState.copy(
+                                avatarUpdates = if (isSelectedAvatar) {
+                                    currentState.avatarUpdates.inc()
+                                } else {
+                                    currentState.avatarUpdates
+                                },
+                            )
+                        }
                     }
 
                     is GravatarResult.Failure -> {
@@ -330,11 +333,6 @@ internal class AvatarPickerViewModel(
                                         currentState.emailAvatars.selectedAvatarId
                                     },
                                 ),
-                                avatarUpdates = if (isSelectedAvatar) {
-                                    currentState.avatarUpdates.inc()
-                                } else {
-                                    currentState.avatarUpdates
-                                },
                             )
                         }
                     }

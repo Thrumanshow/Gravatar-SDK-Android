@@ -781,14 +781,22 @@ class AvatarPickerViewModelTest {
             expectMostRecentItem()
             val avatarToDelete = avatars.first()
             viewModel.onEvent(AvatarPickerEvent.AvatarDeleteSelected(avatarToDelete.imageId))
-            val avatarPickerUiState = AvatarPickerUiState(
+            var avatarPickerUiState = AvatarPickerUiState(
                 email = email,
                 emailAvatars = emailAvatarsCopy.copy(avatars = avatars.minus(avatarToDelete), selectedAvatarId = null),
                 error = null,
                 profile = ComponentState.Loaded(profile),
                 avatarPickerContentLayout = avatarPickerContentLayout,
-                avatarUpdates = 1,
+                avatarUpdates = 0,
                 scrollToIndex = 0,
+            )
+            assertEquals(
+                avatarPickerUiState,
+                awaitItem(),
+            )
+
+            avatarPickerUiState = avatarPickerUiState.copy(
+                avatarUpdates = 1,
             )
             assertEquals(
                 avatarPickerUiState,
@@ -857,7 +865,7 @@ class AvatarPickerViewModelTest {
                 error = null,
                 profile = ComponentState.Loaded(profile),
                 avatarPickerContentLayout = avatarPickerContentLayout,
-                avatarUpdates = 2,
+                avatarUpdates = 0,
                 scrollToIndex = 0,
             )
             assertEquals(
