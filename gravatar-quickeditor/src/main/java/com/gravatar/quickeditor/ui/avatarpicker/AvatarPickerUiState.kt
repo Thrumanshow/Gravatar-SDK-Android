@@ -23,6 +23,7 @@ internal data class AvatarPickerUiState(
     val failedUploadDialog: AvatarUploadFailure? = null,
     val avatarUpdates: Int = 0,
     val downloadManagerDisabled: Boolean = false,
+    val nonSelectedAvatarAlertVisible: Boolean = false,
 ) {
     val avatarsSectionUiState: AvatarsSectionUiState? = emailAvatars?.mapToUiModel()?.let {
         AvatarsSectionUiState(
