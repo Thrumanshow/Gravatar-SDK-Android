@@ -46,7 +46,7 @@ apiValidation {
 }
 
 val sdkVersion = providers.exec {
-    commandLine("git", "describe", "--tags", "--abbrev=0")
+    commandLine("git", "describe", "--tags")
 }.standardOutput.asText.get().trim()
 
 extra["sdkVersion"] = sdkVersion
