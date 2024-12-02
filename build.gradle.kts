@@ -17,6 +17,7 @@ plugins {
     // Roborazzi
     alias(libs.plugins.roborazzi) apply false
     alias(libs.plugins.binary.compatibility.validator)
+    alias(libs.plugins.ksp) apply false
 }
 
 buildscript {

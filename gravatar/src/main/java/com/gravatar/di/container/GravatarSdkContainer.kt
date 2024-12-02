@@ -7,7 +7,6 @@ import com.gravatar.services.interceptors.AuthenticationInterceptor
 import com.gravatar.services.interceptors.AvatarUploadTimeoutInterceptor
 import com.gravatar.services.interceptors.SdkVersionInterceptor
 import com.squareup.moshi.Moshi
-import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import okhttp3.OkHttpClient
@@ -22,7 +21,6 @@ internal class GravatarSdkContainer private constructor() {
     }
 
     internal val moshi = Moshi.Builder()
-        .add(KotlinJsonAdapterFactory())
         .add(URIJsonAdapter())
         .build()
 

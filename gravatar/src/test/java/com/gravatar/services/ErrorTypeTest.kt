@@ -8,7 +8,6 @@ import com.gravatar.HttpResponseCode.INVALID_REQUEST
 import com.gravatar.HttpResponseCode.SERVER_ERRORS
 import com.gravatar.restapi.models.Error
 import com.squareup.moshi.Moshi
-import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import io.mockk.every
 import io.mockk.mockk
 import junit.framework.TestCase.assertEquals
@@ -19,7 +18,6 @@ import java.net.UnknownHostException
 
 class ErrorTypeTest {
     private val moshi = Moshi.Builder()
-        .add(KotlinJsonAdapterFactory())
         .build()
 
     private val errorBody = """
