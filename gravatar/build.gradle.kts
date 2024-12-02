@@ -73,9 +73,9 @@ android {
 
 dependencies {
     api(libs.okhttp)
-    implementation(libs.moshi.kotlin)
+    implementation(libs.gson)
     implementation(libs.retrofit)
-    implementation(libs.retrofit.moshi.converter)
+    implementation(libs.retrofit.gson.converter)
     implementation(libs.kotlinx.coroutines)
 
     testImplementation(libs.junit)
@@ -111,7 +111,7 @@ openApiGenerate {
     configOptions.set(
         mapOf(
             "library" to "jvm-retrofit2",
-            "serializationLibrary" to "moshi",
+            "serializationLibrary" to "gson",
             "groupId" to "com.gravatar",
             "packageName" to "com.gravatar.restapi",
             "useCoroutines" to "true",

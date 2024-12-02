@@ -1,17 +1,16 @@
 package com.gravatar.moshiadapers
 
-import com.squareup.moshi.FromJson
-import com.squareup.moshi.ToJson
+import com.google.gson.TypeAdapter
+import com.google.gson.stream.JsonReader
+import com.google.gson.stream.JsonWriter
 import java.net.URI
 
-internal class URIJsonAdapter {
-    @ToJson
-    public fun toJson(uri: URI): String {
-        return uri.toString()
+internal class URIJsonAdapter : TypeAdapter<URI>() {
+    override fun write(out: JsonWriter, value: URI) {
+        out.value(value.toString())
     }
 
-    @FromJson
-    public fun fromJson(uriString: String): URI {
-        return URI(uriString)
+    override fun read(input: JsonReader): URI {
+        return URI(input.nextString())
     }
 }

@@ -14,6 +14,7 @@ constraintlayout = "2.1.4"
 dataStore = "1.1.1-beta03"
 detekt = "1.23.4"
 dokka = "1.9.20"
+gson = "2.11.0"
 junit = "4.13.2"
 kotlin = "1.9.25"
 kotlinCoroutines = "1.7.3"
@@ -23,7 +24,6 @@ material = "1.12.0"
 materialAdaptive = "1.0.0"
 mockk = "1.13.9"
 mockwebserver = "4.12.0"
-moshi = "1.15.1"
 navigationCompose = "2.8.3"
 okhttp = "4.12.0"
 openapi = "7.4.0"
@@ -62,16 +62,16 @@ compose-ui = { module = "androidx.compose.ui:ui" }
 compose-ui-graphics = { module = "androidx.compose.ui:ui-graphics" }
 compose-ui-tooling-preview = { module = "androidx.compose.ui:ui-tooling-preview" }
 composables-core = {group = "com.composables", name = "core", version.ref = "composablesCore" }
+gson = { group = "com.google.code.gson", name = "gson", version.ref = "gson" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 kotlinx-coroutines = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-android", version.ref = "kotlinCoroutines" }
 kotlinx-coroutines-test = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-test", version.ref = "kotlinCoroutines" }
 mockk-agent = { group = "io.mockk", name = "mockk-agent", version.ref = "mockk" }
 mockk-android = { group = "io.mockk", name = "mockk-android", version.ref = "mockk" }
 mockwebserver = { group = "com.squareup.okhttp3", name = "mockwebserver", version.ref = "mockwebserver" }
-moshi-kotlin = { group = "com.squareup.moshi", name = "moshi-kotlin", version.ref = "moshi" }
 okhttp = { group = "com.squareup.okhttp3", name = "okhttp", version.ref = "okhttp" }
 retrofit = { group = "com.squareup.retrofit2", name = "retrofit", version.ref = "retrofit" }
-retrofit-moshi-converter = { group = "com.squareup.retrofit2", name = "converter-moshi", version.ref = "retrofit" }
+retrofit-gson-converter = { group = "com.squareup.retrofit2", name = "converter-gson", version.ref = "retrofit" }
 robolectric = { group = "org.robolectric", name = "robolectric", version.ref = "robolectric" }
 roborazzi = { group = "io.github.takahirom.roborazzi", name = "roborazzi", version.ref = "roborazzi" }
 roborazzi-compose = { group = "io.github.takahirom.roborazzi", name = "roborazzi-compose", version.ref = "roborazzi" }

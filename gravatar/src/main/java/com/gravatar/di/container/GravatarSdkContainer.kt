@@ -1,18 +1,17 @@
 package com.gravatar.di.container
 
+import com.google.gson.GsonBuilder
 import com.gravatar.GravatarConstants.GRAVATAR_API_BASE_URL_V3
 import com.gravatar.moshiadapers.URIJsonAdapter
 import com.gravatar.services.GravatarApi
 import com.gravatar.services.interceptors.AuthenticationInterceptor
 import com.gravatar.services.interceptors.AvatarUploadTimeoutInterceptor
 import com.gravatar.services.interceptors.SdkVersionInterceptor
-import com.squareup.moshi.Moshi
-import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
-import retrofit2.converter.moshi.MoshiConverterFactory
+import retrofit2.converter.gson.GsonConverterFactory
 
 internal class GravatarSdkContainer private constructor() {
     companion object {
@@ -21,10 +20,9 @@ internal class GravatarSdkContainer private constructor() {
         }
     }
 
-    internal val moshi = Moshi.Builder()
-        .add(KotlinJsonAdapterFactory())
-        .add(URIJsonAdapter())
-        .build()
+    internal val gson = GsonBuilder()
+        .registerTypeAdapter(java.net.URI::class.java, URIJsonAdapter())
+        .create()
 
     private fun getRetrofitApiV3Builder() = Retrofit.Builder().baseUrl(GRAVATAR_API_BASE_URL_V3)
 
@@ -38,7 +36,7 @@ internal class GravatarSdkContainer private constructor() {
     fun getGravatarV3Service(okHttpClient: OkHttpClient? = null, oauthToken: String? = null): GravatarApi {
         return getRetrofitApiV3Builder().apply {
             client(okHttpClient.buildOkHttpClient(oauthToken))
-        }.addConverterFactory(MoshiConverterFactory.create(moshi))
+        }.addConverterFactory(GsonConverterFactory.create(gson))
             .build().create(GravatarApi::class.java)
     }
 
