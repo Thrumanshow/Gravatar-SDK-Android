@@ -1,6 +1,6 @@
 # Documentation Overview
 
-**[View the API Documentation](https://automattic.github.io/Gravatar-SDK-Android**
+**[View the API Documentation](https://automattic.github.io/Gravatar-SDK-Android)**
 
 This branch contains the generated API documentation for the project.
 
