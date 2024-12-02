@@ -2,7 +2,7 @@ package com.gravatar.di.container
 
 import com.google.gson.GsonBuilder
 import com.gravatar.GravatarConstants.GRAVATAR_API_BASE_URL_V3
-import com.gravatar.moshiadapers.URIJsonAdapter
+import com.gravatar.gsonadapters.URIJsonAdapter
 import com.gravatar.services.GravatarApi
 import com.gravatar.services.interceptors.AuthenticationInterceptor
 import com.gravatar.services.interceptors.AvatarUploadTimeoutInterceptor
