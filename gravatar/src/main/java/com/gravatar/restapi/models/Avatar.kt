@@ -21,8 +21,8 @@ import java.util.Objects
  * @param updatedDate Date and time when the image was last updated.
  * @param selected Whether the image is currently selected as the provided selected email's avatar.
  */
-
-public class Avatar private constructor(
+@JsonClass(generateAdapter = true)
+public class Avatar internal constructor(
     // Unique identifier for the image.
     @Json(name = "image_id")
     public val imageId: kotlin.String,

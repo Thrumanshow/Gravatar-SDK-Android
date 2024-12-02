@@ -180,7 +180,6 @@ public final class com/gravatar/extensions/UserProfileExtensionsKt {
 }
 
 public final class com/gravatar/restapi/models/AssociatedResponse {
-	public synthetic fun <init> (ZLkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getAssociated ()Z
 	public fun hashCode ()I
@@ -195,12 +194,20 @@ public final class com/gravatar/restapi/models/AssociatedResponse$Builder {
 	public final synthetic fun setAssociated (Ljava/lang/Boolean;)V
 }
 
+public final class com/gravatar/restapi/models/AssociatedResponseJsonAdapter : com/squareup/moshi/JsonAdapter {
+	public fun <init> (Lcom/squareup/moshi/Moshi;)V
+	public fun fromJson (Lcom/squareup/moshi/JsonReader;)Lcom/gravatar/restapi/models/AssociatedResponse;
+	public synthetic fun fromJson (Lcom/squareup/moshi/JsonReader;)Ljava/lang/Object;
+	public fun toJson (Lcom/squareup/moshi/JsonWriter;Lcom/gravatar/restapi/models/AssociatedResponse;)V
+	public synthetic fun toJson (Lcom/squareup/moshi/JsonWriter;Ljava/lang/Object;)V
+	public fun toString ()Ljava/lang/String;
+}
+
 public final class com/gravatar/restapi/models/AssociatedResponseKt {
 	public static final synthetic fun AssociatedResponse (Lkotlin/jvm/functions/Function1;)Lcom/gravatar/restapi/models/AssociatedResponse;
 }
 
 public final class com/gravatar/restapi/models/Avatar {
-	public synthetic fun <init> (Ljava/lang/String;Ljava/net/URI;Lcom/gravatar/restapi/models/Avatar$Rating;Ljava/lang/String;Ljava/lang/String;Ljava/lang/Boolean;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getAltText ()Ljava/lang/String;
 	public final fun getImageId ()Ljava/lang/String;
@@ -246,12 +253,20 @@ public final class com/gravatar/restapi/models/Avatar$Rating : java/lang/Enum {
 	public static fun values ()[Lcom/gravatar/restapi/models/Avatar$Rating;
 }
 
+public final class com/gravatar/restapi/models/AvatarJsonAdapter : com/squareup/moshi/JsonAdapter {
+	public fun <init> (Lcom/squareup/moshi/Moshi;)V
+	public fun fromJson (Lcom/squareup/moshi/JsonReader;)Lcom/gravatar/restapi/models/Avatar;
+	public synthetic fun fromJson (Lcom/squareup/moshi/JsonReader;)Ljava/lang/Object;
+	public fun toJson (Lcom/squareup/moshi/JsonWriter;Lcom/gravatar/restapi/models/Avatar;)V
+	public synthetic fun toJson (Lcom/squareup/moshi/JsonWriter;Ljava/lang/Object;)V
+	public fun toString ()Ljava/lang/String;
+}
+
 public final class com/gravatar/restapi/models/AvatarKt {
 	public static final synthetic fun Avatar (Lkotlin/jvm/functions/Function1;)Lcom/gravatar/restapi/models/Avatar;
 }
 
 public final class com/gravatar/restapi/models/CryptoWalletAddress {
-	public synthetic fun <init> (Ljava/lang/String;Ljava/lang/String;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getAddress ()Ljava/lang/String;
 	public final fun getLabel ()Ljava/lang/String;
@@ -270,12 +285,20 @@ public final class com/gravatar/restapi/models/CryptoWalletAddress$Builder {
 	public final synthetic fun setLabel (Ljava/lang/String;)V
 }
 
+public final class com/gravatar/restapi/models/CryptoWalletAddressJsonAdapter : com/squareup/moshi/JsonAdapter {
+	public fun <init> (Lcom/squareup/moshi/Moshi;)V
+	public fun fromJson (Lcom/squareup/moshi/JsonReader;)Lcom/gravatar/restapi/models/CryptoWalletAddress;
+	public synthetic fun fromJson (Lcom/squareup/moshi/JsonReader;)Ljava/lang/Object;
+	public fun toJson (Lcom/squareup/moshi/JsonWriter;Lcom/gravatar/restapi/models/CryptoWalletAddress;)V
+	public synthetic fun toJson (Lcom/squareup/moshi/JsonWriter;Ljava/lang/Object;)V
+	public fun toString ()Ljava/lang/String;
+}
+
 public final class com/gravatar/restapi/models/CryptoWalletAddressKt {
 	public static final synthetic fun CryptoWalletAddress (Lkotlin/jvm/functions/Function1;)Lcom/gravatar/restapi/models/CryptoWalletAddress;
 }
 
 public final class com/gravatar/restapi/models/Error {
-	public synthetic fun <init> (Ljava/lang/String;Ljava/lang/String;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getCode ()Ljava/lang/String;
 	public final fun getError ()Ljava/lang/String;
@@ -294,12 +317,20 @@ public final class com/gravatar/restapi/models/Error$Builder {
 	public final synthetic fun setError (Ljava/lang/String;)V
 }
 
+public final class com/gravatar/restapi/models/ErrorJsonAdapter : com/squareup/moshi/JsonAdapter {
+	public fun <init> (Lcom/squareup/moshi/Moshi;)V
+	public fun fromJson (Lcom/squareup/moshi/JsonReader;)Lcom/gravatar/restapi/models/Error;
+	public synthetic fun fromJson (Lcom/squareup/moshi/JsonReader;)Ljava/lang/Object;
+	public fun toJson (Lcom/squareup/moshi/JsonWriter;Lcom/gravatar/restapi/models/Error;)V
+	public synthetic fun toJson (Lcom/squareup/moshi/JsonWriter;Ljava/lang/Object;)V
+	public fun toString ()Ljava/lang/String;
+}
+
 public final class com/gravatar/restapi/models/ErrorKt {
 	public static final synthetic fun Error (Lkotlin/jvm/functions/Function1;)Lcom/gravatar/restapi/models/Error;
 }
 
 public final class com/gravatar/restapi/models/GalleryImage {
-	public synthetic fun <init> (Ljava/net/URI;Ljava/lang/String;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getAltText ()Ljava/lang/String;
 	public final fun getUrl ()Ljava/net/URI;
@@ -318,12 +349,20 @@ public final class com/gravatar/restapi/models/GalleryImage$Builder {
 	public final synthetic fun setUrl (Ljava/net/URI;)V
 }
 
+public final class com/gravatar/restapi/models/GalleryImageJsonAdapter : com/squareup/moshi/JsonAdapter {
+	public fun <init> (Lcom/squareup/moshi/Moshi;)V
+	public fun fromJson (Lcom/squareup/moshi/JsonReader;)Lcom/gravatar/restapi/models/GalleryImage;
+	public synthetic fun fromJson (Lcom/squareup/moshi/JsonReader;)Ljava/lang/Object;
+	public fun toJson (Lcom/squareup/moshi/JsonWriter;Lcom/gravatar/restapi/models/GalleryImage;)V
+	public synthetic fun toJson (Lcom/squareup/moshi/JsonWriter;Ljava/lang/Object;)V
+	public fun toString ()Ljava/lang/String;
+}
+
 public final class com/gravatar/restapi/models/GalleryImageKt {
 	public static final synthetic fun GalleryImage (Lkotlin/jvm/functions/Function1;)Lcom/gravatar/restapi/models/GalleryImage;
 }
 
 public final class com/gravatar/restapi/models/Interest {
-	public synthetic fun <init> (ILjava/lang/String;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getId ()I
 	public final fun getName ()Ljava/lang/String;
@@ -342,12 +381,20 @@ public final class com/gravatar/restapi/models/Interest$Builder {
 	public final synthetic fun setName (Ljava/lang/String;)V
 }
 
+public final class com/gravatar/restapi/models/InterestJsonAdapter : com/squareup/moshi/JsonAdapter {
+	public fun <init> (Lcom/squareup/moshi/Moshi;)V
+	public fun fromJson (Lcom/squareup/moshi/JsonReader;)Lcom/gravatar/restapi/models/Interest;
+	public synthetic fun fromJson (Lcom/squareup/moshi/JsonReader;)Ljava/lang/Object;
+	public fun toJson (Lcom/squareup/moshi/JsonWriter;Lcom/gravatar/restapi/models/Interest;)V
+	public synthetic fun toJson (Lcom/squareup/moshi/JsonWriter;Ljava/lang/Object;)V
+	public fun toString ()Ljava/lang/String;
+}
+
 public final class com/gravatar/restapi/models/InterestKt {
 	public static final synthetic fun Interest (Lkotlin/jvm/functions/Function1;)Lcom/gravatar/restapi/models/Interest;
 }
 
 public final class com/gravatar/restapi/models/Language {
-	public synthetic fun <init> (Ljava/lang/String;Ljava/lang/String;ZILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getCode ()Ljava/lang/String;
 	public final fun getName ()Ljava/lang/String;
@@ -374,12 +421,20 @@ public final class com/gravatar/restapi/models/Language$Builder {
 	public final synthetic fun setPrimary (Ljava/lang/Boolean;)V
 }
 
+public final class com/gravatar/restapi/models/LanguageJsonAdapter : com/squareup/moshi/JsonAdapter {
+	public fun <init> (Lcom/squareup/moshi/Moshi;)V
+	public fun fromJson (Lcom/squareup/moshi/JsonReader;)Lcom/gravatar/restapi/models/Language;
+	public synthetic fun fromJson (Lcom/squareup/moshi/JsonReader;)Ljava/lang/Object;
+	public fun toJson (Lcom/squareup/moshi/JsonWriter;Lcom/gravatar/restapi/models/Language;)V
+	public synthetic fun toJson (Lcom/squareup/moshi/JsonWriter;Ljava/lang/Object;)V
+	public fun toString ()Ljava/lang/String;
+}
+
 public final class com/gravatar/restapi/models/LanguageKt {
 	public static final synthetic fun Language (Lkotlin/jvm/functions/Function1;)Lcom/gravatar/restapi/models/Language;
 }
 
 public final class com/gravatar/restapi/models/Link {
-	public synthetic fun <init> (Ljava/lang/String;Ljava/net/URI;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getLabel ()Ljava/lang/String;
 	public final fun getUrl ()Ljava/net/URI;
@@ -398,12 +453,20 @@ public final class com/gravatar/restapi/models/Link$Builder {
 	public final synthetic fun setUrl (Ljava/net/URI;)V
 }
 
+public final class com/gravatar/restapi/models/LinkJsonAdapter : com/squareup/moshi/JsonAdapter {
+	public fun <init> (Lcom/squareup/moshi/Moshi;)V
+	public fun fromJson (Lcom/squareup/moshi/JsonReader;)Lcom/gravatar/restapi/models/Link;
+	public synthetic fun fromJson (Lcom/squareup/moshi/JsonReader;)Ljava/lang/Object;
+	public fun toJson (Lcom/squareup/moshi/JsonWriter;Lcom/gravatar/restapi/models/Link;)V
+	public synthetic fun toJson (Lcom/squareup/moshi/JsonWriter;Ljava/lang/Object;)V
+	public fun toString ()Ljava/lang/String;
+}
+
 public final class com/gravatar/restapi/models/LinkKt {
 	public static final synthetic fun Link (Lkotlin/jvm/functions/Function1;)Lcom/gravatar/restapi/models/Link;
 }
 
 public final class com/gravatar/restapi/models/Profile {
-	public synthetic fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/net/URI;Ljava/net/URI;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/util/List;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/util/List;Ljava/lang/String;Ljava/lang/String;Ljava/lang/Boolean;Ljava/lang/String;Ljava/lang/String;Ljava/util/List;Ljava/util/List;Lcom/gravatar/restapi/models/ProfilePayments;Lcom/gravatar/restapi/models/ProfileContactInfo;Ljava/util/List;Ljava/lang/Integer;Ljava/lang/String;Ljava/lang/String;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getAvatarAltText ()Ljava/lang/String;
 	public final fun getAvatarUrl ()Ljava/net/URI;
@@ -523,7 +586,7 @@ public final class com/gravatar/restapi/models/Profile$Builder {
 }
 
 public final class com/gravatar/restapi/models/ProfileContactInfo {
-	public synthetic fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/net/URI;Ljava/net/URI;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun <init> ()V
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getCalendar ()Ljava/net/URI;
 	public final fun getCellPhone ()Ljava/lang/String;
@@ -558,8 +621,26 @@ public final class com/gravatar/restapi/models/ProfileContactInfo$Builder {
 	public final synthetic fun setWorkPhone (Ljava/lang/String;)V
 }
 
+public final class com/gravatar/restapi/models/ProfileContactInfoJsonAdapter : com/squareup/moshi/JsonAdapter {
+	public fun <init> (Lcom/squareup/moshi/Moshi;)V
+	public fun fromJson (Lcom/squareup/moshi/JsonReader;)Lcom/gravatar/restapi/models/ProfileContactInfo;
+	public synthetic fun fromJson (Lcom/squareup/moshi/JsonReader;)Ljava/lang/Object;
+	public fun toJson (Lcom/squareup/moshi/JsonWriter;Lcom/gravatar/restapi/models/ProfileContactInfo;)V
+	public synthetic fun toJson (Lcom/squareup/moshi/JsonWriter;Ljava/lang/Object;)V
+	public fun toString ()Ljava/lang/String;
+}
+
 public final class com/gravatar/restapi/models/ProfileContactInfoKt {
 	public static final synthetic fun ProfileContactInfo (Lkotlin/jvm/functions/Function1;)Lcom/gravatar/restapi/models/ProfileContactInfo;
+}
+
+public final class com/gravatar/restapi/models/ProfileJsonAdapter : com/squareup/moshi/JsonAdapter {
+	public fun <init> (Lcom/squareup/moshi/Moshi;)V
+	public fun fromJson (Lcom/squareup/moshi/JsonReader;)Lcom/gravatar/restapi/models/Profile;
+	public synthetic fun fromJson (Lcom/squareup/moshi/JsonReader;)Ljava/lang/Object;
+	public fun toJson (Lcom/squareup/moshi/JsonWriter;Lcom/gravatar/restapi/models/Profile;)V
+	public synthetic fun toJson (Lcom/squareup/moshi/JsonWriter;Ljava/lang/Object;)V
+	public fun toString ()Ljava/lang/String;
 }
 
 public final class com/gravatar/restapi/models/ProfileKt {
@@ -567,7 +648,6 @@ public final class com/gravatar/restapi/models/ProfileKt {
 }
 
 public final class com/gravatar/restapi/models/ProfilePayments {
-	public synthetic fun <init> (Ljava/util/List;Ljava/util/List;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getCryptoWallets ()Ljava/util/List;
 	public final fun getLinks ()Ljava/util/List;
@@ -584,6 +664,15 @@ public final class com/gravatar/restapi/models/ProfilePayments$Builder {
 	public final synthetic fun setCryptoWallets (Ljava/util/List;)V
 	public final fun setLinks (Ljava/util/List;)Lcom/gravatar/restapi/models/ProfilePayments$Builder;
 	public final synthetic fun setLinks (Ljava/util/List;)V
+}
+
+public final class com/gravatar/restapi/models/ProfilePaymentsJsonAdapter : com/squareup/moshi/JsonAdapter {
+	public fun <init> (Lcom/squareup/moshi/Moshi;)V
+	public fun fromJson (Lcom/squareup/moshi/JsonReader;)Lcom/gravatar/restapi/models/ProfilePayments;
+	public synthetic fun fromJson (Lcom/squareup/moshi/JsonReader;)Ljava/lang/Object;
+	public fun toJson (Lcom/squareup/moshi/JsonWriter;Lcom/gravatar/restapi/models/ProfilePayments;)V
+	public synthetic fun toJson (Lcom/squareup/moshi/JsonWriter;Ljava/lang/Object;)V
+	public fun toString ()Ljava/lang/String;
 }
 
 public final class com/gravatar/restapi/models/ProfilePaymentsKt {
@@ -609,7 +698,6 @@ public final class com/gravatar/restapi/models/Rating$Companion {
 }
 
 public final class com/gravatar/restapi/models/SetEmailAvatarRequest {
-	public synthetic fun <init> (Ljava/lang/String;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getEmailHash ()Ljava/lang/String;
 	public fun hashCode ()I
@@ -624,12 +712,21 @@ public final class com/gravatar/restapi/models/SetEmailAvatarRequest$Builder {
 	public final synthetic fun setEmailHash (Ljava/lang/String;)V
 }
 
+public final class com/gravatar/restapi/models/SetEmailAvatarRequestJsonAdapter : com/squareup/moshi/JsonAdapter {
+	public fun <init> (Lcom/squareup/moshi/Moshi;)V
+	public fun fromJson (Lcom/squareup/moshi/JsonReader;)Lcom/gravatar/restapi/models/SetEmailAvatarRequest;
+	public synthetic fun fromJson (Lcom/squareup/moshi/JsonReader;)Ljava/lang/Object;
+	public fun toJson (Lcom/squareup/moshi/JsonWriter;Lcom/gravatar/restapi/models/SetEmailAvatarRequest;)V
+	public synthetic fun toJson (Lcom/squareup/moshi/JsonWriter;Ljava/lang/Object;)V
+	public fun toString ()Ljava/lang/String;
+}
+
 public final class com/gravatar/restapi/models/SetEmailAvatarRequestKt {
 	public static final synthetic fun SetEmailAvatarRequest (Lkotlin/jvm/functions/Function1;)Lcom/gravatar/restapi/models/SetEmailAvatarRequest;
 }
 
 public final class com/gravatar/restapi/models/UpdateAvatarRequest {
-	public synthetic fun <init> (Lcom/gravatar/restapi/models/Rating;Ljava/lang/String;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun <init> ()V
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getAltText ()Ljava/lang/String;
 	public final fun getRating ()Lcom/gravatar/restapi/models/Rating;
@@ -648,12 +745,20 @@ public final class com/gravatar/restapi/models/UpdateAvatarRequest$Builder {
 	public final synthetic fun setRating (Lcom/gravatar/restapi/models/Rating;)V
 }
 
+public final class com/gravatar/restapi/models/UpdateAvatarRequestJsonAdapter : com/squareup/moshi/JsonAdapter {
+	public fun <init> (Lcom/squareup/moshi/Moshi;)V
+	public fun fromJson (Lcom/squareup/moshi/JsonReader;)Lcom/gravatar/restapi/models/UpdateAvatarRequest;
+	public synthetic fun fromJson (Lcom/squareup/moshi/JsonReader;)Ljava/lang/Object;
+	public fun toJson (Lcom/squareup/moshi/JsonWriter;Lcom/gravatar/restapi/models/UpdateAvatarRequest;)V
+	public synthetic fun toJson (Lcom/squareup/moshi/JsonWriter;Ljava/lang/Object;)V
+	public fun toString ()Ljava/lang/String;
+}
+
 public final class com/gravatar/restapi/models/UpdateAvatarRequestKt {
 	public static final synthetic fun UpdateAvatarRequest (Lkotlin/jvm/functions/Function1;)Lcom/gravatar/restapi/models/UpdateAvatarRequest;
 }
 
 public final class com/gravatar/restapi/models/VerifiedAccount {
-	public synthetic fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/net/URI;Ljava/net/URI;ZLkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getServiceIcon ()Ljava/net/URI;
 	public final fun getServiceLabel ()Ljava/lang/String;
@@ -682,6 +787,15 @@ public final class com/gravatar/restapi/models/VerifiedAccount$Builder {
 	public final synthetic fun setServiceType (Ljava/lang/String;)V
 	public final fun setUrl (Ljava/net/URI;)Lcom/gravatar/restapi/models/VerifiedAccount$Builder;
 	public final synthetic fun setUrl (Ljava/net/URI;)V
+}
+
+public final class com/gravatar/restapi/models/VerifiedAccountJsonAdapter : com/squareup/moshi/JsonAdapter {
+	public fun <init> (Lcom/squareup/moshi/Moshi;)V
+	public fun fromJson (Lcom/squareup/moshi/JsonReader;)Lcom/gravatar/restapi/models/VerifiedAccount;
+	public synthetic fun fromJson (Lcom/squareup/moshi/JsonReader;)Ljava/lang/Object;
+	public fun toJson (Lcom/squareup/moshi/JsonWriter;Lcom/gravatar/restapi/models/VerifiedAccount;)V
+	public synthetic fun toJson (Lcom/squareup/moshi/JsonWriter;Ljava/lang/Object;)V
+	public fun toString ()Ljava/lang/String;
 }
 
 public final class com/gravatar/restapi/models/VerifiedAccountKt {

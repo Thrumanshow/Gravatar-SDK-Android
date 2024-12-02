@@ -8,6 +8,7 @@
 package com.gravatar.restapi.models
 
 import com.squareup.moshi.Json
+import com.squareup.moshi.JsonClass
 import java.util.Objects
 
 /**
@@ -16,8 +17,8 @@ import java.util.Objects
  * @param rating Rating associated with the image.
  * @param altText Alternative text description of the image.
  */
-
-public class UpdateAvatarRequest private constructor(
+@JsonClass(generateAdapter = true)
+public class UpdateAvatarRequest internal constructor(
     // Rating associated with the image.
     @Json(name = "rating")
     public val rating: Rating? = null,

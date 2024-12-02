@@ -8,6 +8,7 @@
 package com.gravatar.restapi.models
 
 import com.squareup.moshi.Json
+import com.squareup.moshi.JsonClass
 import java.util.Objects
 
 /**
@@ -16,8 +17,8 @@ import java.util.Objects
  * @param label The label for the crypto currency.
  * @param address The wallet address for the crypto currency.
  */
-
-public class CryptoWalletAddress private constructor(
+@JsonClass(generateAdapter = true)
+public class CryptoWalletAddress internal constructor(
     // The label for the crypto currency.
     @Json(name = "label")
     public val label: kotlin.String,

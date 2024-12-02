@@ -8,6 +8,7 @@
 package com.gravatar.restapi.models
 
 import com.squareup.moshi.Json
+import com.squareup.moshi.JsonClass
 import java.util.Objects
 
 /**
@@ -16,8 +17,8 @@ import java.util.Objects
  * @param label The label for the link.
  * @param url The URL to the link.
  */
-
-public class Link private constructor(
+@JsonClass(generateAdapter = true)
+public class Link internal constructor(
     // The label for the link.
     @Json(name = "label")
     public val label: kotlin.String,

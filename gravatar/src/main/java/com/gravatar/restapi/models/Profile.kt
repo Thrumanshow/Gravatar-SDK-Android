@@ -8,6 +8,7 @@
 package com.gravatar.restapi.models
 
 import com.squareup.moshi.Json
+import com.squareup.moshi.JsonClass
 import java.util.Objects
 
 /**
@@ -41,8 +42,8 @@ import java.util.Objects
  * @param lastProfileEdit The date and time (UTC) the user last edited their profile. This is only provided in authenticated API requests.
  * @param registrationDate The date the user registered their account. This is only provided in authenticated API requests.
  */
-
-public class Profile private constructor(
+@JsonClass(generateAdapter = true)
+public class Profile internal constructor(
     // The SHA256 hash of the user's primary email address.
     @Json(name = "hash")
     public val hash: kotlin.String,

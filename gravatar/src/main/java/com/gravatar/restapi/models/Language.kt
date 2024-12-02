@@ -8,6 +8,7 @@
 package com.gravatar.restapi.models
 
 import com.squareup.moshi.Json
+import com.squareup.moshi.JsonClass
 import java.util.Objects
 
 /**
@@ -18,8 +19,8 @@ import java.util.Objects
  * @param isPrimary Whether the language is the user's primary language.
  * @param order The order of the language in the user's profile.
  */
-
-public class Language private constructor(
+@JsonClass(generateAdapter = true)
+public class Language internal constructor(
     // The language code.
     @Json(name = "code")
     public val code: kotlin.String,

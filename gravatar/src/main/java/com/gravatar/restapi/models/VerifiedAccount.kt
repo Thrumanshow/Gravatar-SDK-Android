@@ -8,6 +8,7 @@
 package com.gravatar.restapi.models
 
 import com.squareup.moshi.Json
+import com.squareup.moshi.JsonClass
 import java.util.Objects
 
 /**
@@ -19,8 +20,8 @@ import java.util.Objects
  * @param url The URL to the user's profile on the service.
  * @param isHidden Whether the verified account is hidden from the user's profile.
  */
-
-public class VerifiedAccount private constructor(
+@JsonClass(generateAdapter = true)
+public class VerifiedAccount internal constructor(
     // The type of the service.
     @Json(name = "service_type")
     public val serviceType: kotlin.String,

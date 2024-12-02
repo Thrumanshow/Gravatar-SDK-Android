@@ -8,6 +8,7 @@
 package com.gravatar.restapi.models
 
 import com.squareup.moshi.Json
+import com.squareup.moshi.JsonClass
 import java.util.Objects
 
 /**
@@ -16,8 +17,8 @@ import java.util.Objects
  * @param error The error message
  * @param code The error code for the error message
  */
-
-public class Error private constructor(
+@JsonClass(generateAdapter = true)
+public class Error internal constructor(
     // The error message
     @Json(name = "error")
     public val error: kotlin.String,

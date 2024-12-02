@@ -8,6 +8,7 @@
 package com.gravatar.restapi.models
 
 import com.squareup.moshi.Json
+import com.squareup.moshi.JsonClass
 import java.util.Objects
 
 /**
@@ -16,8 +17,8 @@ import java.util.Objects
  * @param id The unique identifier for the interest.
  * @param name The name of the interest.
  */
-
-public class Interest private constructor(
+@JsonClass(generateAdapter = true)
+public class Interest internal constructor(
     // The unique identifier for the interest.
     @Json(name = "id")
     public val id: kotlin.Int,

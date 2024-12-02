@@ -8,6 +8,7 @@
 package com.gravatar.restapi.models
 
 import com.squareup.moshi.Json
+import com.squareup.moshi.JsonClass
 import java.util.Objects
 
 /**
@@ -15,8 +16,8 @@ import java.util.Objects
  *
  * @param emailHash The email SHA256 hash to set the avatar for.
  */
-
-public class SetEmailAvatarRequest private constructor(
+@JsonClass(generateAdapter = true)
+public class SetEmailAvatarRequest internal constructor(
     // The email SHA256 hash to set the avatar for.
     @Json(name = "email_hash")
     public val emailHash: kotlin.String,

@@ -8,6 +8,7 @@
 package com.gravatar.restapi.models
 
 import com.squareup.moshi.Json
+import com.squareup.moshi.JsonClass
 import java.util.Objects
 
 /**
@@ -20,8 +21,8 @@ import java.util.Objects
  * @param contactForm The URL to the user's contact form.
  * @param calendar The URL to the user's calendar.
  */
-
-public class ProfileContactInfo private constructor(
+@JsonClass(generateAdapter = true)
+public class ProfileContactInfo internal constructor(
     // The user's home phone number.
     @Json(name = "home_phone")
     public val homePhone: kotlin.String? = null,

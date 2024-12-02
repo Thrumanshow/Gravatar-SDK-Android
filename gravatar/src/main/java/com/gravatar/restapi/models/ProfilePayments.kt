@@ -8,6 +8,7 @@
 package com.gravatar.restapi.models
 
 import com.squareup.moshi.Json
+import com.squareup.moshi.JsonClass
 import java.util.Objects
 
 /**
@@ -16,8 +17,8 @@ import java.util.Objects
  * @param links A list of payment URLs the user has added to their profile.
  * @param cryptoWallets A list of crypto currencies the user accepts.
  */
-
-public class ProfilePayments private constructor(
+@JsonClass(generateAdapter = true)
+public class ProfilePayments internal constructor(
     // A list of payment URLs the user has added to their profile.
     @Json(name = "links")
     public val links: kotlin.collections.List<Link>,

@@ -8,6 +8,7 @@
 package com.gravatar.restapi.models
 
 import com.squareup.moshi.Json
+import com.squareup.moshi.JsonClass
 import java.util.Objects
 
 /**
@@ -15,8 +16,8 @@ import java.util.Objects
  *
  * @param associated Whether the entity is associated with the account.
  */
-
-public class AssociatedResponse private constructor(
+@JsonClass(generateAdapter = true)
+public class AssociatedResponse internal constructor(
     // Whether the entity is associated with the account.
     @Json(name = "associated")
     public val associated: kotlin.Boolean,

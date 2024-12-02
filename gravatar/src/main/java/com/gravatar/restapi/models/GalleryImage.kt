@@ -8,6 +8,7 @@
 package com.gravatar.restapi.models
 
 import com.squareup.moshi.Json
+import com.squareup.moshi.JsonClass
 import java.util.Objects
 
 /**
@@ -16,8 +17,8 @@ import java.util.Objects
  * @param url The URL to the image.
  * @param altText The image alt text.
  */
-
-public class GalleryImage private constructor(
+@JsonClass(generateAdapter = true)
+public class GalleryImage internal constructor(
     // The URL to the image.
     @Json(name = "url")
     public val url: java.net.URI,
