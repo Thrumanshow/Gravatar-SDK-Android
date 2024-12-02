@@ -7,7 +7,7 @@
  */
 package com.gravatar.restapi.models
 
-import com.squareup.moshi.Json
+import com.google.gson.annotations.SerializedName
 import java.util.Objects
 
 /**
@@ -19,10 +19,10 @@ import java.util.Objects
 
 public class ProfilePayments private constructor(
     // A list of payment URLs the user has added to their profile.
-    @Json(name = "links")
+    @SerializedName("links")
     public val links: kotlin.collections.List<Link>,
     // A list of crypto currencies the user accepts.
-    @Json(name = "crypto_wallets")
+    @SerializedName("crypto_wallets")
     public val cryptoWallets: kotlin.collections.List<CryptoWalletAddress>,
 ) {
     override fun toString(): String = "ProfilePayments(links=$links, cryptoWallets=$cryptoWallets)"

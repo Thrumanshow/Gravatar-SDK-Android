@@ -17,7 +17,7 @@ internal inline fun <T> runCatchingRequest(block: () -> T?): GravatarResult<T, E
     } catch (gravatarException: GravatarException) {
         GravatarResult.Failure(gravatarException.errorType)
     } catch (ex: Exception) {
-        GravatarResult.Failure(ex.errorType(GravatarSdkContainer.instance.moshi))
+        GravatarResult.Failure(ex.errorType(GravatarSdkContainer.instance.gson))
     }
 }
 
@@ -29,6 +29,6 @@ internal inline fun <T> runThrowingExceptionRequest(block: () -> T?): T {
     } catch (cancellationException: CancellationException) {
         throw cancellationException
     } catch (ex: Exception) {
-        throw GravatarException(ex.errorType(GravatarSdkContainer.instance.moshi), ex)
+        throw GravatarException(ex.errorType(GravatarSdkContainer.instance.gson), ex)
     }
 }

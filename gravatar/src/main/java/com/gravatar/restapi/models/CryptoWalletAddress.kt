@@ -7,7 +7,7 @@
  */
 package com.gravatar.restapi.models
 
-import com.squareup.moshi.Json
+import com.google.gson.annotations.SerializedName
 import java.util.Objects
 
 /**
@@ -19,10 +19,10 @@ import java.util.Objects
 
 public class CryptoWalletAddress private constructor(
     // The label for the crypto currency.
-    @Json(name = "label")
+    @SerializedName("label")
     public val label: kotlin.String,
     // The wallet address for the crypto currency.
-    @Json(name = "address")
+    @SerializedName("address")
     public val address: kotlin.String,
 ) {
     override fun toString(): String = "CryptoWalletAddress(label=$label, address=$address)"

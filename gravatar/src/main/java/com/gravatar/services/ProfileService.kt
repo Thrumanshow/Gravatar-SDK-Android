@@ -51,7 +51,7 @@ public class ProfileService(private val okHttpClient: OkHttpClient? = null) {
                 }
             }
         } catch (ex: Exception) {
-            throw GravatarException(ex.errorType(GravatarSdkContainer.instance.moshi), ex)
+            throw GravatarException(ex.errorType(GravatarSdkContainer.instance.gson), ex)
         }
 
     /**

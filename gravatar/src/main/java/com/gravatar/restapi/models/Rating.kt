@@ -7,8 +7,7 @@
  */
 package com.gravatar.restapi.models
 
-import com.squareup.moshi.Json
-import com.squareup.moshi.JsonClass
+import com.google.gson.annotations.SerializedName
 
 /**
  * Rating associated with the image.
@@ -16,18 +15,17 @@ import com.squareup.moshi.JsonClass
  * Values: G,PG,R,X
  */
 
-@JsonClass(generateAdapter = false)
 public enum class Rating(public val value: kotlin.String) {
-    @Json(name = "G")
+    @SerializedName(value = "G")
     G("G"),
 
-    @Json(name = "PG")
+    @SerializedName(value = "PG")
     PG("PG"),
 
-    @Json(name = "R")
+    @SerializedName(value = "R")
     R("R"),
 
-    @Json(name = "X")
+    @SerializedName(value = "X")
     X("X"),
     ;
 

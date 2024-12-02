@@ -7,7 +7,7 @@
  */
 package com.gravatar.restapi.models
 
-import com.squareup.moshi.Json
+import com.google.gson.annotations.SerializedName
 import java.util.Objects
 
 /**
@@ -19,10 +19,10 @@ import java.util.Objects
 
 public class Error private constructor(
     // The error message
-    @Json(name = "error")
+    @SerializedName("error")
     public val error: kotlin.String,
     // The error code for the error message
-    @Json(name = "code")
+    @SerializedName("code")
     public val code: kotlin.String? = null,
 ) {
     override fun toString(): String = "Error(error=$error, code=$code)"

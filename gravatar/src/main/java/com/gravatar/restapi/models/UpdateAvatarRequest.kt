@@ -7,7 +7,7 @@
  */
 package com.gravatar.restapi.models
 
-import com.squareup.moshi.Json
+import com.google.gson.annotations.SerializedName
 import java.util.Objects
 
 /**
@@ -19,10 +19,10 @@ import java.util.Objects
 
 public class UpdateAvatarRequest private constructor(
     // Rating associated with the image.
-    @Json(name = "rating")
+    @SerializedName("rating")
     public val rating: Rating? = null,
     // Alternative text description of the image.
-    @Json(name = "alt_text")
+    @SerializedName("alt_text")
     public val altText: kotlin.String? = null,
 ) {
     override fun toString(): String = "UpdateAvatarRequest(rating=$rating, altText=$altText)"

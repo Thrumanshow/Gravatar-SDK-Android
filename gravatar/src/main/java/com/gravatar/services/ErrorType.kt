@@ -1,20 +1,20 @@
 package com.gravatar.services
 
+import com.google.gson.Gson
 import com.gravatar.HttpResponseCode
 import com.gravatar.restapi.models.Error
-import com.squareup.moshi.Moshi
 import java.net.SocketTimeoutException
 import java.net.UnknownHostException
 import java.util.Objects
 
-internal fun HttpException.errorTypeFromHttpCode(moshi: Moshi): ErrorType = when (code) {
+internal fun HttpException.errorTypeFromHttpCode(gson: Gson): ErrorType = when (code) {
     HttpResponseCode.HTTP_CLIENT_TIMEOUT -> ErrorType.Timeout
     HttpResponseCode.HTTP_NOT_FOUND -> ErrorType.NotFound
     HttpResponseCode.HTTP_TOO_MANY_REQUESTS -> ErrorType.RateLimitExceeded
     HttpResponseCode.UNAUTHORIZED -> ErrorType.Unauthorized
     HttpResponseCode.INVALID_REQUEST -> {
         val error: Error? = runCatching {
-            rawErrorBody?.let { moshi.adapter(Error::class.java).fromJson(it) }
+            rawErrorBody?.let { gson.fromJson(it, Error::class.java) }
         }.getOrNull()
         ErrorType.InvalidRequest(error)
     }
@@ -23,11 +23,11 @@ internal fun HttpException.errorTypeFromHttpCode(moshi: Moshi): ErrorType = when
     else -> ErrorType.Unknown("HTTP Code $code - ErrorBody $rawErrorBody")
 }
 
-internal fun Throwable.errorType(moshi: Moshi): ErrorType {
+internal fun Throwable.errorType(gson: Gson): ErrorType {
     return when (this) {
         is SocketTimeoutException -> ErrorType.Timeout
         is UnknownHostException -> ErrorType.Network
-        is HttpException -> this.errorTypeFromHttpCode(moshi)
+        is HttpException -> this.errorTypeFromHttpCode(gson)
         else -> ErrorType.Unknown(message)
     }
 }

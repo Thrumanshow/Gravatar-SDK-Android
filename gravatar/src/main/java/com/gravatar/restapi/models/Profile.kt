@@ -7,7 +7,7 @@
  */
 package com.gravatar.restapi.models
 
-import com.squareup.moshi.Json
+import com.google.gson.annotations.SerializedName
 import java.util.Objects
 
 /**
@@ -44,83 +44,83 @@ import java.util.Objects
 
 public class Profile private constructor(
     // The SHA256 hash of the user's primary email address.
-    @Json(name = "hash")
+    @SerializedName("hash")
     public val hash: kotlin.String,
     // The user's display name. This is the name that is displayed on their profile.
-    @Json(name = "display_name")
+    @SerializedName("display_name")
     public val displayName: kotlin.String,
     // The full URL for the user's profile.
-    @Json(name = "profile_url")
+    @SerializedName("profile_url")
     public val profileUrl: java.net.URI,
     // The URL for the user's avatar image if it has been set.
-    @Json(name = "avatar_url")
+    @SerializedName("avatar_url")
     public val avatarUrl: java.net.URI,
     // The alt text for the user's avatar image if it has been set.
-    @Json(name = "avatar_alt_text")
+    @SerializedName("avatar_alt_text")
     public val avatarAltText: kotlin.String,
     // The user's location.
-    @Json(name = "location")
+    @SerializedName("location")
     public val location: kotlin.String,
     // The about section on a user's profile.
-    @Json(name = "description")
+    @SerializedName("description")
     public val description: kotlin.String,
     // The user's job title.
-    @Json(name = "job_title")
+    @SerializedName("job_title")
     public val jobTitle: kotlin.String,
     // The user's current company's name.
-    @Json(name = "company")
+    @SerializedName("company")
     public val company: kotlin.String,
     // A list of verified accounts the user has added to their profile. This is limited to a max of 4 in unauthenticated requests.
-    @Json(name = "verified_accounts")
+    @SerializedName("verified_accounts")
     public val verifiedAccounts: kotlin.collections.List<VerifiedAccount>,
     // The phonetic pronunciation of the user's name.
-    @Json(name = "pronunciation")
+    @SerializedName("pronunciation")
     public val pronunciation: kotlin.String,
     // The pronouns the user uses.
-    @Json(name = "pronouns")
+    @SerializedName("pronouns")
     public val pronouns: kotlin.String,
     // The timezone the user has. This is only provided in authenticated API requests.
-    @Json(name = "timezone")
+    @SerializedName("timezone")
     public val timezone: kotlin.String? = null,
     // The languages the user knows. This is only provided in authenticated API requests.
-    @Json(name = "languages")
+    @SerializedName("languages")
     public val languages: kotlin.collections.List<Language>? = null,
     // User's first name. This is only provided in authenticated API requests.
-    @Json(name = "first_name")
+    @SerializedName("first_name")
     public val firstName: kotlin.String? = null,
     // User's last name. This is only provided in authenticated API requests.
-    @Json(name = "last_name")
+    @SerializedName("last_name")
     public val lastName: kotlin.String? = null,
     // Whether user is an organization. This is only provided in authenticated API requests.
-    @Json(name = "is_organization")
+    @SerializedName("is_organization")
     public val isOrganization: kotlin.Boolean? = null,
     // The header image used in the main profile card.
-    @Json(name = "header_image")
+    @SerializedName("header_image")
     public val headerImage: kotlin.String? = null,
     // The profile background color.
-    @Json(name = "background_color")
+    @SerializedName("background_color")
     public val backgroundColor: kotlin.String? = null,
     // A list of links the user has added to their profile. This is only provided in authenticated API requests.
-    @Json(name = "links")
+    @SerializedName("links")
     public val links: kotlin.collections.List<Link>? = null,
     // A list of interests the user has added to their profile. This is only provided in authenticated API requests.
-    @Json(name = "interests")
+    @SerializedName("interests")
     public val interests: kotlin.collections.List<Interest>? = null,
-    @Json(name = "payments")
+    @SerializedName("payments")
     public val payments: ProfilePayments? = null,
-    @Json(name = "contact_info")
+    @SerializedName("contact_info")
     public val contactInfo: ProfileContactInfo? = null,
     // Additional images a user has uploaded. This is only provided in authenticated API requests.
-    @Json(name = "gallery")
+    @SerializedName("gallery")
     public val gallery: kotlin.collections.List<GalleryImage>? = null,
     // The number of verified accounts the user has added to their profile. This count includes verified accounts the user is hiding from their profile. This is only provided in authenticated API requests.
-    @Json(name = "number_verified_accounts")
+    @SerializedName("number_verified_accounts")
     public val numberVerifiedAccounts: kotlin.Int? = null,
     // The date and time (UTC) the user last edited their profile. This is only provided in authenticated API requests.
-    @Json(name = "last_profile_edit")
+    @SerializedName("last_profile_edit")
     public val lastProfileEdit: String? = null,
     // The date the user registered their account. This is only provided in authenticated API requests.
-    @Json(name = "registration_date")
+    @SerializedName("registration_date")
     public val registrationDate: String? = null,
 ) {
     override fun toString(): String = "Profile(hash=$hash, displayName=$displayName, profileUrl=$profileUrl, avatarUrl=$avatarUrl, avatarAltText=$avatarAltText, location=$location, description=$description, jobTitle=$jobTitle, company=$company, verifiedAccounts=$verifiedAccounts, pronunciation=$pronunciation, pronouns=$pronouns, timezone=$timezone, languages=$languages, firstName=$firstName, lastName=$lastName, isOrganization=$isOrganization, headerImage=$headerImage, backgroundColor=$backgroundColor, links=$links, interests=$interests, payments=$payments, contactInfo=$contactInfo, gallery=$gallery, numberVerifiedAccounts=$numberVerifiedAccounts, lastProfileEdit=$lastProfileEdit, registrationDate=$registrationDate)"

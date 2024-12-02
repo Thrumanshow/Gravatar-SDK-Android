@@ -7,7 +7,7 @@
  */
 package com.gravatar.restapi.models
 
-import com.squareup.moshi.Json
+import com.google.gson.annotations.SerializedName
 import java.util.Objects
 
 /**
@@ -18,7 +18,7 @@ import java.util.Objects
 
 public class AssociatedResponse private constructor(
     // Whether the entity is associated with the account.
-    @Json(name = "associated")
+    @SerializedName("associated")
     public val associated: kotlin.Boolean,
 ) {
     override fun toString(): String = "AssociatedResponse(associated=$associated)"

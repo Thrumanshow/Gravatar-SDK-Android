@@ -7,7 +7,7 @@
  */
 package com.gravatar.restapi.models
 
-import com.squareup.moshi.Json
+import com.google.gson.annotations.SerializedName
 import java.util.Objects
 
 /**
@@ -19,10 +19,10 @@ import java.util.Objects
 
 public class Link private constructor(
     // The label for the link.
-    @Json(name = "label")
+    @SerializedName("label")
     public val label: kotlin.String,
     // The URL to the link.
-    @Json(name = "url")
+    @SerializedName("url")
     public val url: java.net.URI,
 ) {
     override fun toString(): String = "Link(label=$label, url=$url)"
