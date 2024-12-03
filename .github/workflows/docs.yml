@@ -39,6 +39,8 @@ jobs:
       - name: Generate Dokka Documentation
         working-directory: ./code
         run: |
+          git config user.name github-actions
+          git config user.email github-actions@github.com
           git tag -a 2.2.0 -m "Test"
           ./gradlew dokkaHtmlMultiModule
       - name: Update Docs
