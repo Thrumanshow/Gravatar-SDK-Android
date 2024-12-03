@@ -33,8 +33,9 @@ jobs:
           java-version: '17'
       - name: Copy docs to the code directory
         run: |
-          cp -R ./docs/current/ ./code/docs/dokka/current
-          cp -R ./docs/history/ ./code/docs/dokka/history
+          mkdir -p ./code/docs/dokka
+          cp -R ./docs/current ./code/docs/dokka
+          cp -R ./docs/history ./code/docs/dokka
       - name: Generate Dokka Documentation
         working-directory: ./code
         run: |
@@ -43,7 +44,7 @@ jobs:
       - name: Update Docs
         run: |
           cp -R code/docs/dokka/history docs/
-          cp -R code/docs/dokka/current current/
+          cp -R code/docs/dokka/current docs/
       - name: Push updated docs
         working-directory: ./docs
         run: |
