@@ -22,7 +22,7 @@ jobs:
       - name: Checkout the branch with the docs
         uses: actions/checkout@v4
         with:
-          ref: 'docs'
+          ref: 'adam/only_docs'
           path: 'docs'
       - name: Print the current directory
         run: ls
@@ -56,7 +56,4 @@ jobs:
           git config user.email github-actions@github.com
           # git commit -m "Update API documentation for ${{ github.ref_name }}"
           git commit -m "Update API documentation for VERSION_HERE"
-          #git push origin docs
-      - name: Print the docs directory
-        working-directory: ./docs/history
-        run: ls
+          git push origin adam/only_docs
