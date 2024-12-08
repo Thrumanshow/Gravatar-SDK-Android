@@ -1,6 +1,6 @@
-<p align="center">
-    <img src="/docs/images/gravatar_logo.png" />
-</p>
+@@ -80,6 +80,256 @@
+We use Ktlint to enforce a consistent coding style. It is integrated into the project as a Gradle plugin using the jlleitschuh/ktlint-gradle wrapper.
+
 
 ## Gravatar-Android
 
